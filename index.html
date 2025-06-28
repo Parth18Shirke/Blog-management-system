@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogMaster - Your Personal Journal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            
+            --primary-color: #1a2b3c; 
+            --secondary-color: #C09557; 
+            --accent-color: #8B0000; 
+            --text-color: #2c3e50; 
+            --bg-color: #F8F8F0; 
+            --card-bg: #FFFFFF;
+            --border-color: #b3a38d; 
+            --bs-link-color: var(--secondary-color);
+            --bs-link-hover-color: var(--primary-color);
+        }
+
+        [data-theme="dark"] {
+          
+            --primary-color: #0F1A2A;
+            --secondary-color: #C09557; 
+            --accent-color: #8B0000;
+            --text-color: #E0E0E0; 
+            --bg-color: #121A26; 
+            --card-bg: #1A2B3C; 
+            --border-color: #5c4e3d; 
+            --bs-link-color: var(--secondary-color);
+            --bs-link-hover-color: var(--text-color);
+        }
+
+        
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .navbar-brand, .navbar-nav .nav-link {
+            color: white !important;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar-brand:hover, .navbar-nav .nav-link:hover {
+            color: var(--secondary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+        }
+
+        .dropdown-item {
+            color: var(--text-color);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+        }
+
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--primary-color);
+            padding: 1rem 1.25rem;
+            font-weight: bold;
+        }
+
+        [data-theme="dark"] .card-header {
+            background-color: var(--primary-color);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #B22222; 
+            border-color: #B22222;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--border-color);
+            border-color: var(--border-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d; 
+            border-color: #7f8c8d;
+            color: white;
+        }
+
+        .btn-outline-primary {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-outline-danger {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        .btn-outline-danger:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+       
+        .form-control, .form-select {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: var(--card-bg);
+            border-color: var(--secondary-color);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.25rem rgba(192, 149, 87, 0.25); 
+        }
+
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--secondary-color);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            transition: background 0.3s ease, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), box-shadow 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-color);
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        
+        .post-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .tag {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 5px; 
+            display: inline-block; 
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .tag:hover {
+            color: white;
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        
+        .stats-card {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        
+        .comment-card {
+            background-color: var(--bg-color); 
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        [data-theme="dark"] .comment-card {
+            background-color: #243447; 
+            border-left-color: var(--secondary-color);
+        }
+
+        
+        .auto-save-indicator {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .auto-save-indicator.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        
+        .trending-badge {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 8px;
+            display: inline-block; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        
+        .search-highlight {
+            background-color: yellow;
+            padding: 1px 2px;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+
+        [data-theme="dark"] .search-highlight {
+            background-color: #f39c12;
+            color: black;
+        }
+
+        
+        .page-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .page-content.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .custom-modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .custom-modal-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(-50px); 
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .custom-modal-overlay.show .custom-modal-content {
+            transform: translateY(0);
+        }
+        .custom-modal-content h5 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        .custom-modal-content p {
+            color: var(--text-color);
+            margin-bottom: 25px;
+        }
+        .custom-modal-content .btn-group {
+            margin-top: 20px;
+        }
+
+       
+        .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+            color: var(--primary-color);
+            margin-top: 1.5em;
+            margin-bottom: 0.75em;
+        }
+        .post-content p {
+            margin-bottom: 1em;
+        }
+        .post-content ul, .post-content ol {
+            margin-bottom: 1em;
+            padding-left: 20px;
+        }
+        .post-content li {
+            margin-bottom: 0.5em;
+        }
+        .post-content code {
+            background-color: var(--bg-color);
+            border-radius: 4px;
+            padding: 2px 4px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.9em;
+        }
+        .post-content pre {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            overflow-x: auto;
+            margin-bottom: 1.5em;
+        }
+
+        
+        @media (max-width: 768px) {
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+
+            .custom-modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <div class="auto-save-indicator" id="autoSaveIndicator">
+        <i class="fas fa-save"></i> Auto-saved
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showHome()">
+                <i class="fas fa-blog"></i> BlogMaster
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showHome()">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item" id="dashboardNav" style="display: none;">
+                        <a class="nav-link" href="#" onclick="showDashboard()">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item" id="createPostNav" style="display: none;">
+                        <a class="nav-link" href="#" onclick="showCreatePost()">
+                            <i class="fas fa-plus"></i> New Post
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" id="loginNav">
+                        <a class="nav-link" href="#" onclick="showLogin()">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item" id="registerNav">
+                        <a class="nav-link" href="#" onclick="showRegister()">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown" id="userNav" style="display: none;">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> <span id="username"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="showProfile()">
+                                <i class="fas fa-user-cog"></i> Profile
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="homePage" class="page-content">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search posts...">
+                        <button class="btn btn-primary" onclick="searchPosts()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="tagFilter" onchange="filterPosts()">
+                        <option value="">All Tags</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="sortOrder" onchange="filterPosts()">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="most_viewed">Most Viewed</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5><i class="fas fa-fire"></i> Trending Posts</h5>
+                </div>
+                <div class="card-body">
+                    <div id="trendingPosts" class="row">
+                        </div>
+                </div>
+            </div>
+
+            <div id="postsList">
+                </div>
+
+            <nav>
+                <ul class="pagination justify-content-center" id="pagination">
+                    </ul>
+            </nav>
+        </div>
+
+        <div id="loginPage" class="page-content" style="display: none;">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-sign-in-alt"></i> Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="loginEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-sign-in-alt"></i> Login
+                                </button>
+                            </form>
+                            <div class="text-center mt-3">
+                                <p>Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="registerPage" class="page-content" style="display: none;">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user-plus"></i> Register</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="registerForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="registerUsername" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="registerEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="registerPassword" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirmPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-user-plus"></i> Register
+                                </button>
+                            </form>
+                            <div class="text-center mt-3">
+                                <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboardPage" class="page-content" style="display: none;">
+            <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card stats-card">
+                        <div class="card-body text-center">
+                            <h3 id="totalPosts">0</h3>
+                            <p>Total Posts</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stats-card">
+                        <div class="card-body text-center">
+                            <h3 id="totalViews">0</h3>
+                            <p>Total Views</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stats-card">
+                        <div class="card-body text-center">
+                            <h3 id="totalComments">0</h3>
+                            <p>Comments</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stats-card">
+                        <div class="card-body text-center">
+                            <h3 id="totalTags">0</h3>
+                            <p>Unique Tags</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h5><i class="fas fa-file-alt"></i> My Posts</h5>
+                    <button class="btn btn-primary btn-sm" onclick="showCreatePost()">
+                        <i class="fas fa-plus"></i> New Post
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="myPostsList">
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="createPostPage" class="page-content" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-plus"></i> <span id="postFormTitle">Create New Post</span></h3>
+                </div>
+                <div class="card-body">
+                    <form id="postForm">
+                        <input type="hidden" id="postId" value="">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" id="postTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea class="form-control" id="postContent" rows="15" required></textarea>
+                            <small class="form-text text-muted">
+                                Supports Markdown syntax. Use **bold**, *italic*, # headers, etc.
+                            </small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="postTags" placeholder="Enter tags separated by commas">
+                            <div id="tagSuggestions" class="mt-2"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Featured Image URL (Optional)</label>
+                            <input type="url" class="form-control" id="postImage">
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary" onclick="saveDraft()">
+                                <i class="fas fa-save"></i> Save Draft
+                            </button>
+                            <div>
+                                <button type="button" class="btn btn-secondary me-2" onclick="showDashboard()">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> <span id="submitButtonText">Publish Post</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="singlePostPage" class="page-content" style="display: none;">
+            <div id="singlePostContent">
+                </div>
+        </div>
+    </div>
+
+    <div id="customModalOverlay" class="custom-modal-overlay">
+        <div class="custom-modal-content">
+            <h5 id="customModalTitle"></h5>
+            <p id="customModalMessage"></p>
+            <div id="customModalButtons" class="btn-group">
+                </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/5.1.1/marked.min.js"></script>
+
+    <script>
+        
+        let currentUser = null;
+        let currentPage = 1;
+        let postsPerPage = 5;
+        let allPosts = [];
+        let allTags = [];
+        let autoSaveTimer = null;
+
+        
+        const API_URL = 'api.php'; 
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            checkAuthStatus();
+            loadHomePage();
+            setupEventListeners();
+        });
+
+        
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('theme-icon');
+            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+      
+        async function checkAuthStatus() {
+            try {
+                const response = await fetch(`${API_URL}?action=check_auth`);
+                const data = await response.json();
+                if (data.success && data.user) {
+                    currentUser = data.user;
+                    updateNavigation(true);
+                } else {
+                    currentUser = null;
+                    updateNavigation(false);
+                }
+            } catch (error) {
+                console.error('Error checking auth status:', error);
+                currentUser = null;
+                updateNavigation(false);
+            }
+        }
+
+        function updateNavigation(isLoggedIn) {
+            document.getElementById('loginNav').style.display = isLoggedIn ? 'none' : 'block';
+            document.getElementById('registerNav').style.display = isLoggedIn ? 'none' : 'block';
+            document.getElementById('userNav').style.display = isLoggedIn ? 'block' : 'none';
+            document.getElementById('dashboardNav').style.display = isLoggedIn ? 'block' : 'none';
+            document.getElementById('createPostNav').style.display = isLoggedIn ? 'block' : 'none';
+            
+            if (isLoggedIn) {
+                document.getElementById('username').textContent = currentUser.username;
+            }
+        }
+
+        
+        function showPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('show');
+                page.style.display = 'none';
+            });
+            const activePage = document.getElementById(pageId);
+            activePage.style.display = 'block';
+           
+            void activePage.offsetWidth; 
+            activePage.classList.add('show'); 
+        }
+
+
+        function showHome() {
+            showPage('homePage');
+            loadHomePage();
+        }
+
+        function showLogin() {
+            showPage('loginPage');
+        }
+
+        function showRegister() {
+            showPage('registerPage');
+        }
+
+        async function showDashboard() {
+            if (!currentUser) {
+                showAlert('Please login to view your dashboard.', 'info');
+                showLogin();
+                return;
+            }
+            showPage('dashboardPage');
+            await loadDashboard();
+        }
+
+        async function showCreatePost(postId = null) {
+            if (!currentUser) {
+                showAlert('Please login to create or edit posts.', 'info');
+                showLogin();
+                return;
+            }
+            showPage('createPostPage');
+            if (postId) {
+                await loadPostForEdit(postId);
+            } else {
+                resetPostForm();
+                loadDraft();
+            }
+        }
+
+        async function showSinglePost(postId) {
+            showPage('singlePostPage');
+            await loadSinglePost(postId);
+        }
+
+        
+        async function loadHomePage() {
+            await loadPosts();
+            await loadTrendingPosts(); 
+            await loadTagsForFilter();
+        }
+
+        async function loadPosts(searchTerm = '', tagFilter = '', sortOrder = 'newest') {
+            try {
+                const response = await fetch(`${API_URL}?action=get_posts&search=${encodeURIComponent(searchTerm)}&tag=${encodeURIComponent(tagFilter)}&sort=${encodeURIComponent(sortOrder)}`);
+                const data = await response.json();
+                if (data.success) {
+                    allPosts = data.posts;
+                    displayPosts();
+                    generatePagination();
+                } else {
+                    showAlert(`Error loading posts: ${data.message}`, 'danger');
+                    allPosts = []; 
+                    displayPosts(); 
+                    generatePagination();
+                }
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+                showAlert('Failed to load posts. Please try again.', 'danger');
+                allPosts = [];
+                displayPosts();
+                generatePagination();
+            }
+        }
+
+        function displayPosts() {
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const postsToShow = allPosts.slice(startIndex, endIndex);
+
+            const postsContainer = document.getElementById('postsList');
+            
+            if (postsToShow.length === 0) {
+                postsContainer.innerHTML = `
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+                            <h5>No posts found</h5>
+                            <p class="text-muted">Try adjusting your search or filter criteria.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            postsContainer.innerHTML = postsToShow.map(post => `
+                <div class="card">
+                    ${post.image ? `<img src="${post.image}" class="card-img-top" style="height: 200px; object-fit: cover;">` : ''}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="#" onclick="showSinglePost(${post.id})" class="text-decoration-none">
+                                ${highlightSearchTerm(post.title)}
+                            </a>
+                            ${post.views > 100 ? '<span class="trending-badge"><i class="fas fa-fire"></i> Trending</span>' : ''}
+                        </h5>
+                        <div class="post-meta mb-2">
+                            <i class="fas fa-user"></i> ${post.author} |
+                            <i class="fas fa-clock"></i> ${formatDate(post.created_at)} |
+                            <i class="fas fa-eye"></i> ${post.views} views
+                        </div>
+                        <p class="card-text">${highlightSearchTerm(truncateContent(stripMarkdown(post.content), 150))}</p>
+                        <div class="mb-2">
+                            ${post.tags.map(tag => `<a href="#" class="tag" onclick="filterByTag('${tag}')">${tag}</a>`).join('')}
+                        </div>
+                        <small class="text-muted">
+                            ${post.comments ? JSON.parse(post.comments).length : 0} comments
+                        </small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function loadTrendingPosts() {
+            try {
+                const response = await fetch(`${API_URL}?action=get_trending_posts`);
+                const data = await response.json();
+                const container = document.getElementById('trendingPosts');
+
+                if (data.success && data.posts.length > 0) {
+                    container.innerHTML = data.posts.map((post, index) => `
+                        <div class="col-md-${index === 0 ? '6' : '3'} mb-2">
+                            <div class="card h-100">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-1">
+                                        <a href="#" onclick="showSinglePost(${post.id})" class="text-decoration-none">
+                                            ${truncateContent(post.title, 50)}
+                                        </a>
+                                    </h6>
+                                    <small class="text-muted">
+                                        <i class="fas fa-eye"></i> ${post.views} views
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = '<p class="text-muted">No trending posts yet.</p>';
+                }
+            } catch (error) {
+                console.error('Error fetching trending posts:', error);
+                document.getElementById('trendingPosts').innerHTML = '<p class="text-muted">Failed to load trending posts.</p>';
+            }
+        }
+
+        async function loadTagsForFilter() {
+            try {
+                const response = await fetch(`${API_URL}?action=get_all_tags`);
+                const data = await response.json();
+                const tagFilter = document.getElementById('tagFilter');
+
+                if (data.success && data.tags.length > 0) {
+                    tagFilter.innerHTML = '<option value="">All Tags</option>' + 
+                        data.tags.map(tag => `<option value="${tag}">${tag}</option>`).join('');
+                } else {
+                    tagFilter.innerHTML = '<option value="">All Tags</option>';
+                }
+            } catch (error) {
+                console.error('Error fetching tags:', error);
+                document.getElementById('tagFilter').innerHTML = '<option value="">All Tags</option>';
+            }
+        }
+
+        
+        function searchPosts() {
+            const searchTerm = document.getElementById('searchInput').value;
+            const tagFilter = document.getElementById('tagFilter').value;
+            const sortOrder = document.getElementById('sortOrder').value;
+            currentPage = 1;
+            loadPosts(searchTerm, tagFilter, sortOrder);
+        }
+
+        function filterPosts() {
+            const searchTerm = document.getElementById('searchInput').value;
+            const tagFilter = document.getElementById('tagFilter').value;
+            const sortOrder = document.getElementById('sortOrder').value;
+            currentPage = 1;
+            loadPosts(searchTerm, tagFilter, sortOrder);
+        }
+
+        function filterByTag(tag) {
+            document.getElementById('tagFilter').value = tag;
+            filterPosts();
+        }
+
+        
+        function highlightSearchTerm(text) {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (!searchTerm) return text;
+            
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+
+        function truncateContent(content, length) {
+            return content.length > length ? content.substring(0, length) + '...' : content;
+        }
+
+        function stripMarkdown(text) {
+            
+            let strippedText = text.replace(/^(#+\s.*)$/gm, '')
+                                   .replace(/(\*\*|__)(.*?)\1/g, '$2') 
+                                   .replace(/(\*|_)(.*?)\1/g, '$2') 
+                                   .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+                                   .replace(/!\[(.*?)\]\(.*?\)/g, '')
+                                   .replace(/`{1,3}.*?`{1,3}/gs, '')
+                                   .replace(/^-+\s*$/gm, '') 
+                                   .replace(/^\s*>\s*/gm, '') 
+                                   .replace(/[\*\-]\s/g, ''); 
+            
+            return strippedText.replace(/\s\s+/g, ' ').trim(); 
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        
+        function generatePagination() {
+            const totalPages = Math.ceil(allPosts.length / postsPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+            
+            
+            if (currentPage > 1) {
+                paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a></li>`;
+            }
+
+            
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHTML += `<li class="page-item active"><span class="page-link">${i}</span></li>`;
+                } else {
+                    paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${i})">${i}</a></li>`;
+                }
+            }
+
+           
+            if (currentPage < totalPages) {
+                paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a></li>`;
+            }
+
+            pagination.innerHTML = paginationHTML;
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            displayPosts();
+            generatePagination();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        
+        function setupEventListeners() {
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('registerForm').addEventListener('submit', handleRegister);
+            document.getElementById('postForm').addEventListener('submit', handlePostSubmit);
+            
+            
+            document.getElementById('postContent').addEventListener('input', scheduleAutoSave);
+            document.getElementById('postTitle').addEventListener('input', scheduleAutoSave);
+            
+           
+            document.getElementById('postTags').addEventListener('input', showTagSuggestions);
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'login', email, password })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    currentUser = data.user;
+                    updateNavigation(true);
+                    showAlert('Login successful!', 'success');
+                    showDashboard();
+                } else {
+                    showAlert(data.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                showAlert('An error occurred during login. Please try again.', 'danger');
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('registerUsername').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match!', 'danger');
+                return;
+            }
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'register', username, email, password })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    showAlert('Registration successful! Please login.', 'success');
+                    showLogin();
+                } else {
+                    showAlert(data.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error during registration:', error);
+                showAlert('An error occurred during registration. Please try again.', 'danger');
+            }
+        }
+
+        async function logout() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'logout' })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    currentUser = null;
+                    updateNavigation(false);
+                    showAlert('Logged out successfully!', 'info');
+                    showHome();
+                } else {
+                    showAlert(data.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error during logout:', error);
+                showAlert('An error occurred during logout. Please try again.', 'danger');
+            }
+        }
+
+        
+        async function loadDashboard() {
+            if (!currentUser) return; 
+            
+            try {
+                const response = await fetch(`${API_URL}?action=get_user_posts&author_id=${currentUser.id}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const userPosts = data.posts;
+                    
+                    
+                    document.getElementById('totalPosts').textContent = userPosts.length;
+                    document.getElementById('totalViews').textContent = userPosts.reduce((sum, post) => sum + parseInt(post.views || 0), 0);
+                    document.getElementById('totalComments').textContent = userPosts.reduce((sum, post) => {
+                        try {
+                            const comments = JSON.parse(post.comments || '[]');
+                            return sum + comments.length;
+                        } catch (e) {
+                            console.error('Error parsing comments:', e);
+                            return sum;
+                        }
+                    }, 0);
+                    
+                    const uniqueTags = [...new Set(userPosts.flatMap(post => post.tags.split(',').map(tag => tag.trim()).filter(tag => tag)))];
+                    document.getElementById('totalTags').textContent = uniqueTags.length;
+
+                    
+                    displayUserPosts(userPosts);
+                } else {
+                    showAlert(`Error loading dashboard data: ${data.message}`, 'danger');
+                    displayUserPosts([]); 
+                }
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+                showAlert('Failed to load dashboard data. Please try again.', 'danger');
+                displayUserPosts([]); 
+            }
+        }
+
+        function displayUserPosts(posts) {
+            const container = document.getElementById('myPostsList');
+            
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center">
+                        <i class="fas fa-file-alt fa-3x mb-3 text-muted"></i>
+                        <h5>No posts yet</h5>
+                        <p class="text-muted">Start by creating your first blog post!</p>
+                        <button class="btn btn-primary" onclick="showCreatePost()">
+                            <i class="fas fa-plus"></i> Create Post
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = posts.map(post => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <h5 class="card-title">
+                                    <a href="#" onclick="showSinglePost(${post.id})" class="text-decoration-none">
+                                        ${post.title}
+                                    </a>
+                                </h5>
+                                <div class="post-meta mb-2">
+                                    <i class="fas fa-clock"></i> ${formatDate(post.created_at)} |
+                                    <i class="fas fa-eye"></i> ${post.views} views |
+                                    <i class="fas fa-comments"></i> ${post.comments ? JSON.parse(post.comments).length : 0} comments
+                                </div>
+                                <p class="card-text">${truncateContent(stripMarkdown(post.content), 100)}</p>
+                                <div>
+                                    ${post.tags.split(',').map(tag => tag.trim()).filter(t => t).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="ms-3">
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="showCreatePost(${post.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="confirmDeletePost(${post.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+       
+        function resetPostForm() {
+            document.getElementById('postForm').reset();
+            document.getElementById('postId').value = '';
+            document.getElementById('postFormTitle').textContent = 'Create New Post';
+            document.getElementById('submitButtonText').textContent = 'Publish Post';
+            document.getElementById('tagSuggestions').innerHTML = ''; 
+        }
+
+        async function loadPostForEdit(postId) {
+            try {
+                const response = await fetch(`${API_URL}?action=get_single_post&id=${postId}`);
+                const data = await response.json();
+                
+                if (data.success && data.post) {
+                    const post = data.post;
+                    if (post.author_id != currentUser.id) { 
+                        showAlert('You do not have permission to edit this post!', 'danger');
+                        showDashboard();
+                        return;
+                    }
+                    document.getElementById('postId').value = post.id;
+                    document.getElementById('postTitle').value = post.title;
+                    document.getElementById('postContent').value = post.content;
+                    document.getElementById('postTags').value = post.tags || '';
+                    document.getElementById('postImage').value = post.image || '';
+                    document.getElementById('postFormTitle').textContent = 'Edit Post';
+                    document.getElementById('submitButtonText').textContent = 'Update Post';
+                } else {
+                    showAlert(`Error loading post for edit: ${data.message}`, 'danger');
+                    showDashboard();
+                }
+            } catch (error) {
+                console.error('Error fetching post for edit:', error);
+                showAlert('Failed to load post for editing. Please try again.', 'danger');
+                showDashboard();
+            }
+        }
+
+        async function handlePostSubmit(e) {
+            e.preventDefault();
+            
+            const postId = document.getElementById('postId').value;
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            const tagsInput = document.getElementById('postTags').value.trim();
+            const image = document.getElementById('postImage').value.trim();
+            
+            const tags = tagsInput ? tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag).join(', ') : '';
+
+            if (!title || !content) {
+                showAlert('Title and content are required!', 'danger');
+                return;
+            }
+
+            const postData = {
+                id: postId || null, 
+                title,
+                content,
+                tags,
+                image,
+                author: currentUser.username,
+                author_id: currentUser.id
+            };
+
+            const action = postId ? 'update_post' : 'create_post';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action, ...postData })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    showAlert(data.message, 'success');
+                    
+                    localStorage.removeItem('postDraft');
+                    showDashboard();
+                } else {
+                    showAlert(data.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error submitting post:', error);
+                showAlert('An error occurred while saving the post. Please try again.', 'danger');
+            }
+        }
+
+        function confirmDeletePost(postId) {
+            showCustomModal('Confirm Delete', 'Are you sure you want to delete this post?', 
+                [
+                    { text: 'Delete', className: 'btn btn-danger', action: () => deletePost(postId) },
+                    { text: 'Cancel', className: 'btn btn-secondary', action: hideCustomModal }
+                ]
+            );
+        }
+
+        async function deletePost(postId) {
+            hideCustomModal(); 
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'delete_post', id: postId, author_id: currentUser.id })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    showAlert('Post deleted successfully!', 'success');
+                    loadDashboard();
+                } else {
+                    showAlert(data.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error deleting post:', error);
+                showAlert('An error occurred while deleting the post. Please try again.', 'danger');
+            }
+        }
+
+        
+        function scheduleAutoSave() {
+            if (autoSaveTimer) {
+                clearTimeout(autoSaveTimer);
+            }
+            autoSaveTimer = setTimeout(autoSave, 2000); 
+        }
+
+        function autoSave() {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const tags = document.getElementById('postTags').value;
+            const image = document.getElementById('postImage').value;
+
+            if (title || content) {
+                const draft = { title, content, tags, image, timestamp: new Date().toISOString() };
+                localStorage.setItem('postDraft', JSON.stringify(draft));
+                showAutoSaveIndicator();
+            }
+        }
+
+        function loadDraft() {
+            const draft = localStorage.getItem('postDraft');
+            if (draft) {
+                const draftData = JSON.parse(draft);
+                document.getElementById('postTitle').value = draftData.title || '';
+                document.getElementById('postContent').value = draftData.content || '';
+                document.getElementById('postTags').value = draftData.tags || '';
+                document.getElementById('postImage').value = draftData.image || '';
+            }
+        }
+
+        function saveDraft() {
+            autoSave();
+            showAlert('Draft saved!', 'info');
+        }
+
+        function showAutoSaveIndicator() {
+            const indicator = document.getElementById('autoSaveIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+
+       
+        async function showTagSuggestions() {
+            const input = document.getElementById('postTags').value;
+            const lastTag = input.split(',').pop().trim().toLowerCase();
+            
+            if (lastTag.length < 2) {
+                document.getElementById('tagSuggestions').innerHTML = '';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}?action=get_all_tags`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const allTags = data.tags;
+                    const suggestions = allTags.filter(tag => 
+                        tag.toLowerCase().includes(lastTag) && 
+                        !input.toLowerCase().includes(tag.toLowerCase())
+                    ).slice(0, 5);
+
+                    if (suggestions.length > 0) {
+                        document.getElementById('tagSuggestions').innerHTML = `
+                            <small class="text-muted">Suggestions:</small><br>
+                            ${suggestions.map(tag => 
+                                `<button type="button" class="btn btn-sm btn-outline-secondary me-1 mb-1" onclick="addTag('${tag}')">${tag}</button>`
+                            ).join('')}
+                        `;
+                    } else {
+                        document.getElementById('tagSuggestions').innerHTML = '';
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching tag suggestions:', error);
+                document.getElementById('tagSuggestions').innerHTML = '';
+            }
+        }
+
+        function addTag(tag) {
+            const input = document.getElementById('postTags');
+            const tags = input.value.split(',').map(t => t.trim()).filter(t => t);
+            tags[tags.length - 1] = tag;
+            input.value = tags.join(', ') + ', ';
+            document.getElementById('tagSuggestions').innerHTML = '';
+            input.focus();
+        }
+
+       
+        async function loadSinglePost(postId) {
+            try {
+                
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'increment_view', id: postId })
+                });
+
+                
+                const response = await fetch(`${API_URL}?action=get_single_post&id=${postId}`);
+                const data = await response.json();
+                
+                if (data.success && data.post) {
+                    const post = data.post;
+                    const renderedContent = marked.parse(post.content);
+                    const comments = post.comments ? JSON.parse(post.comments) : [];
+
+                    document.getElementById('singlePostContent').innerHTML = `
+                        <div class="card">
+                            ${post.image ? `<img src="${post.image}" class="card-img-top" style="max-height: 400px; object-fit: cover;">` : ''}
+                            <div class="card-body">
+                                <h1 class="card-title">${post.title}</h1>
+                                <div class="post-meta mb-4">
+                                    <i class="fas fa-user"></i> ${post.author} |
+                                    <i class="fas fa-clock"></i> ${formatDate(post.created_at)} |
+                                    <i class="fas fa-eye"></i> ${post.views} views
+                                    ${post.updated_at !== post.created_at ? `| <i class="fas fa-edit"></i> Updated ${formatDate(post.updated_at)}` : ''}
+                                </div>
+                                <div class="mb-4">
+                                    ${post.tags.split(',').map(tag => tag.trim()).filter(t => t).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                </div>
+                                <div class="post-content">
+                                    ${renderedContent}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h5><i class="fas fa-link"></i> Related Posts</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="relatedPosts">
+                                    ${await getRelatedPostsHtml(postId, post.tags)}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h5><i class="fas fa-comments"></i> Comments (${comments.length})</h5>
+                            </div>
+                            <div class="card-body">
+                                ${currentUser ? `
+                                    <form id="commentForm" class="mb-4">
+                                        <div class="mb-3">
+                                            <textarea class="form-control" id="commentContent" rows="3" placeholder="Write your comment..." required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-paper-plane"></i> Post Comment
+                                        </button>
+                                    </form>
+                                ` : `
+                                    <div class="alert alert-info">
+                                        <a href="#" onclick="showLogin()">Login</a> to post comments.
+                                    </div>
+                                `}
+                                
+                                <div id="commentsList">
+                                    ${displayComments(comments)}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-secondary" onclick="showHome()">
+                                <i class="fas fa-arrow-left"></i> Back to Home
+                            </button>
+                            ${currentUser && post.author_id == currentUser.id ? `
+                                <button class="btn btn-primary ms-2" onclick="showCreatePost(${post.id})">
+                                    <i class="fas fa-edit"></i> Edit Post
+                                </button>
+                            ` : ''}
+                        </div>
+                    `;
+
+                    
+                    const commentForm = document.getElementById('commentForm');
+                    if (commentForm) {
+                        commentForm.addEventListener('submit', (e) => handleCommentSubmit(e, postId));
+                    }
+                } else {
+                    document.getElementById('singlePostContent').innerHTML = `
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5>Post not found</h5>
+                                <button class="btn btn-primary" onclick="showHome()">Back to Home</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fetching single post:', error);
+                document.getElementById('singlePostContent').innerHTML = `
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5>Failed to load post. Please try again.</h5>
+                            <button class="btn btn-primary" onclick="showHome()">Back to Home</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function getRelatedPostsHtml(currentPostId, tagsString, limit = 5) {
+            const tags = tagsString.split(',').map(tag => tag.trim()).filter(t => t);
+            if (tags.length === 0) return '<p class="text-muted">No related posts found.</p>';
+
+            try {
+                const response = await fetch(`${API_URL}?action=get_related_posts&current_post_id=${currentPostId}&tags=${encodeURIComponent(tagsString)}&limit=${limit}`);
+                const data = await response.json();
+
+                if (data.success && data.posts.length > 0) {
+                    return data.posts.map(relatedPost => `
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-arrow-right me-2 text-muted"></i>
+                            <a href="#" onclick="showSinglePost(${relatedPost.id})" class="text-decoration-none">
+                                ${relatedPost.title}
+                            </a>
+                            <small class="text-muted ms-auto">${relatedPost.views} views</small>
+                        </div>
+                    `).join('');
+                } else {
+                    return '<p class="text-muted">No related posts found.</p>';
+                }
+            } catch (error) {
+                console.error('Error fetching related posts:', error);
+                return '<p class="text-muted">Failed to load related posts.</p>';
+            }
+        }
+
+        function displayComments(comments) {
+            if (!comments || comments.length === 0) {
+                return '<p class="text-muted">No comments yet. Be the first to comment!</p>';
+            }
+
+            return comments
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .map(comment => `
+                    <div class="comment-card p-3 mb-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <strong>${comment.author}</strong>
+                                <small class="text-muted ms-2">${formatDate(comment.created_at)}</small>
+                            </div>
+                        </div>
+                        <p class="mt-2 mb-0">${comment.content}</p>
+                    </div>
+                `).join('');
+        }
+
+        async function handleCommentSubmit(e, postId) {
+            e.preventDefault();
+            
+            const content = document.getElementById('commentContent').value.trim();
+            if (!content) {
+                showAlert('Comment cannot be empty!', 'danger');
+                return;
+            }
+
+            if (!currentUser) {
+                showAlert('You must be logged in to post a comment.', 'danger');
+                return;
+            }
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        action: 'add_comment', 
+                        post_id: postId,
+                        content: content,
+                        author: currentUser.username,
+                        author_id: currentUser.id
+                    })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('commentContent').value = ''; 
+                    showAlert('Comment posted successfully!', 'success');
+                    loadSinglePost(postId); 
+                } else {
+                    showAlert(data.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error posting comment:', error);
+                showAlert('An error occurred while posting the comment. Please try again.', 'danger');
+            }
+        }
+
+        
+        let customModalResolve;
+
+        function showCustomModal(title, message, buttons) {
+            const modalOverlay = document.getElementById('customModalOverlay');
+            const modalTitle = document.getElementById('customModalTitle');
+            const modalMessage = document.getElementById('customModalMessage');
+            const modalButtons = document.getElementById('customModalButtons');
+
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            modalButtons.innerHTML = '';
+
+            buttons.forEach(buttonInfo => {
+                const button = document.createElement('button');
+                button.className = `${buttonInfo.className} me-2`;
+                button.textContent = buttonInfo.text;
+                button.onclick = () => {
+                    if (buttonInfo.action) {
+                        buttonInfo.action();
+                    }
+                    
+                    if (buttonInfo.text === 'Cancel' || buttonInfo.text === 'OK') {
+                        hideCustomModal();
+                    }
+                };
+                modalButtons.appendChild(button);
+            });
+
+            modalOverlay.classList.add('show');
+        }
+
+        function hideCustomModal() {
+            document.getElementById('customModalOverlay').classList.remove('show');
+        }
+
+        
+        function showAlert(message, type = 'info') {
+            const alertContainer = document.createElement('div');
+            alertContainer.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertContainer.style.cssText = 'top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; min-width: 300px;';
+            alertContainer.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(alertContainer);
+            
+            setTimeout(() => {
+                if (alertContainer.parentNode) {
+                    alertContainer.parentNode.removeChild(alertContainer);
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
